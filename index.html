@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jsPanel - a jQuery Plugin</title>
+        <!-- OPTIONALLY load jQuery UI css (which theme doesn't matter regarding jsPanel) -->
+        <link rel="stylesheet" href="vendor/jquery-ui-1.12.1.complete/jquery-ui.min.css">
+        <!-- loading jsPanel css -->
+        <link rel="stylesheet" href="source/jquery.jspanel.css">
+        <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    </head>
+    <body>
+		<div id="map"></div>
+        <!-- Your HTML goes here -->
+		
+        <!-- loading jQuery -->
+        <script src="vendor/jquery/jquery-3.1.1.min.js"></script>
+        <!-- OPTIONALLY load jQuery UI and jQuery UI Touch Punch js -->
+        <script src="vendor/jquery-ui-1.12.1.complete/jquery-ui.min.js"></script>
+        <!-- <script src="vendor/jquery.ui.touch-punch.min.js"></script> -->
+        <!-- loading jsPanel javascript -->
+        <script src="source/jquery.jspanel-compiled.js"></script>
+        <script>
+
+		
+// example using some options
+var myPanel = $.jsPanel({
+    position:    {my: "right-top", at: "right-top", offsetY: 15},
+    theme:       "rebeccapurple",
+    contentSize: {width: 300, height: 250},
+    headerTitle: "Control panel",
+    contentAjax: 'wcontent.html',
+    callback: function () {
+        this.content.css("padding", "15px");
+    }
+});
+        
+        </script>
+        <script>
+			
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.1015, lng: -7.8313},
+          zoom: 12,
+          draggableCursor:'crosshair',
+        });
+        
+        map.addListener('click', function(event) {
+          var latitude = event.latLng.lat();
+			var longitude = event.latLng.lng();
+		console.log( latitude + ', ' + longitude );
+		$('#lat').html(latitude);
+		$('#lng').html(longitude);
+		
+         
+        });
+        
+        
+        
+      }
+      
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    </body>
+</html>
