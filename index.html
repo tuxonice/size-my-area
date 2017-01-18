@@ -53,6 +53,8 @@ var myPanel = $.jsPanel({
         <script>
 			
       var map;
+      var cityCircle;
+      var marker;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.1015, lng: -7.8313},
@@ -64,19 +66,20 @@ var myPanel = $.jsPanel({
           var latitude = event.latLng.lat();
 			var longitude = event.latLng.lng();
 		console.log( latitude + ', ' + longitude );
-		$('#lat').html(latitude);
-		$('#lng').html(longitude);
 		
-         
+		$('#lat').html(latitude.toFixed(6));
+		$('#lng').html(longitude.toFixed(6));
+		map.panTo(new google.maps.LatLng(latitude, longitude));
+         marker.setPosition(new google.maps.LatLng(latitude, longitude));
         });
         
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
           position: {lat: 37.1015, lng: -7.8313},
           map: map,
           title: 'Hello World!'
         });
         
-        var cityCircle = new google.maps.Circle({
+        cityCircle = new google.maps.Circle({
             strokeColor: '#FF0000',
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -86,11 +89,29 @@ var myPanel = $.jsPanel({
             center: {lat: 37.1015, lng: -7.8313},
             radius: 564
           });
+          
+          $("#radius").html(564);
         
         
       }
       
+      function go(){
+		  
+		  var area = Number($("#value").val());
+		  var radius = Math.sqrt(area/3.14) * 1000;
+		  $("#radius").html(radius);
+		  cityCircle.setRadius(radius);
+		  cityCircle.setCenter(marker.getPosition());
+		  cityCircle.setVisible(true);
+	  }
+	  
+	  function del(){
+		  cityCircle.setVisible(false);
+		  
+	  }
+      
+      
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=[YOUR-KEY]&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=[API-KEY]&callback=initMap" async defer></script>
     </body>
 </html>
