@@ -3,7 +3,7 @@
 var optionsPanel = $.jsPanel({
     position:    {my: "right-top", at: "right-top", offsetY: 15},
     theme:       "rebeccapurple",
-    contentSize: {width: 300, height: 275},
+    contentSize: {width: 300, height: 280},
     headerTitle: "Control panel",
     contentAjax: 'wcontent.html',
     callback: function () {
