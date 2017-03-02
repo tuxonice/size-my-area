@@ -60,12 +60,30 @@ var optionsPanel = $.jsPanel({
       
    function go(){
 		var area = Number($("#value").val());
-		var radius = Math.sqrt(area/3.14) * 1000;
+		var unit = $("#unit").val();
+        area = convertUnit(unit, area);
+        var radius = Math.sqrt(area/3.14) * 1000;
+        
 		$("#radius").html(radius.toFixed(2));
 		cityCircle.setRadius(radius);
 		cityCircle.setCenter(marker.getPosition());
 		cityCircle.setVisible(true);
 	}
+    
+    function convertUnit(unit, area){
+        
+        switch(unit){
+            case 'ha':
+                area = area * 0.01;
+                break;
+            case 'fbf':
+                area = area * 0.00714;
+                break;
+        }
+        
+        return area;
+    }
+    
 	  
 	function del(){
 		cityCircle.setVisible(false);
